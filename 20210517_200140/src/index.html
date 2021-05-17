@@ -1,0 +1,79 @@
+<style>
+    .err {
+        font-size: 12px;
+        color: red;
+    }
+    .ketqua {
+        font-size: 15px;
+        color: green;
+    }
+</style>
+<html>
+<body>
+    <form id="form_name" method="POST">
+        <label for="a">nhập a</label>
+        <input type="number" name="a" id="a" required>
+        <span class="err err_a"></span>
+        <br></br>
+
+        <label for="b">nhập b</label>
+        <input type="number" name="b" id="b" required>
+        <span class="err err_b"></span>
+        <br></br>
+
+        <button type="submit">kết quả</button>
+        <br></br>
+
+        <!-- nhận kết quả trả về từ POST /giai_phuong_trinh_bac_1 -->
+        <div class="ketqua"></div>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#form_name').on('submit', function (e) {
+                // tắt load form
+                e.preventDefault();
+
+                // khai báo
+                var a, b, flag = 1, error = '';
+
+                // lấy dữ liệu
+                a = $('#a').val();
+                b = $('#b').val();
+
+                // kiểm tra dữ liệu
+                if (a == '') {
+                    flag = 0;
+                    $('#err_a').text('[ERROR] nhập a');
+                } else {
+                    $('#err_a').text('');
+                }
+
+                if (b == '') {
+                    flag = 0;
+                    $('#err_b').text('[ERROR] nhập b');
+                } else {
+                    $('#err_b').text('');
+                }
+
+                if (flag == 1) {
+                    // gửi ajax
+                    $.ajax({
+                        url: 'giai_phuong_trinh_bac_1', // đường dẫn qua route
+                        type: 'POST', // phương thức gửi
+                        data: {'a':a, 'b':b}, 
+                        success: function(results) {
+                            console.log(results);
+                            // hiện kết quả trả về từ POST /giai_phuong_trinh_bac_1 trên html
+                            $('.ketqua').html(results);
+                        }
+                    });
+                    alert(a + '/' + b);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
