@@ -22,3 +22,6 @@ npm install body-parser
 2. input a and b -> submit
 3. [POST] giai_phuong_trinh_bac_1
 ```
+
+# exercise
+* thêm class cộng trừ nhân chia
