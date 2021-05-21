@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>upload file</title>
+    </head>
+<body>
+    <form action="" method="POST" enctype="multipart/form-data" id="formUpload">
+        <label for="file">file</label>
+        <input type="file" name="file_upload" id="file" required>
+        <button type="submit">upload file</button>
+    </form>
+    <div stype="margin-top: 20px;">
+        <span>Chú ý:</span>
+        <ul>
+            <li>ảnh không rỗng</li>
+            <li>chỉ nhận ảnh đuôi png</li>
+            <li>kích thước ảnh <= 100KB</li>
+        </ul>    
+    </div>   
+
+    <script>
+        $(document).ready(function() {
+            $('#formUpload').on('submit', function(e) {
+                // tắt load form
+                e.preventDefault();
+
+                var img = $('#file').val();
+                var flag = 1; err = ''
+                if (img == '') {
+                    flag = 0;
+                    err = 'vui lòng chọn file';
+                }
+                
+                var f = document.getElementById('file');
+                f = f.files[0];
+                
+                var err = [];
+                // kiểm tra đuôi ảnh
+                if (f.type != 'image/png') {
+                    flag = 0;
+                    // err = 'sai định dạng ảnh png';
+                    err.push('sai định dạng ảnh png');
+                }
+
+                // kiểm tra size ảnh
+                if (f.size > 102400) { // 100KB
+                    flag = 0;
+                    // err = `kich thươc ảnh quá lớn ${f.size} > 100KB`;
+                    err.push(`kich thươc ảnh quá lớn ${f.size} > 100KB`);
+                }
+
+                if (flag == 1) {
+                    alert('[INFO] ok');
+                    // gửi ajax
+                    $.ajax({
+                        url: 'upload_file',
+                        type: 'POST',
+                        data: new FormData(this),
+                        
+                        // 3. cái cần để gửi ảnh đi
+                        processData: false,
+                        cache: false,
+                        contentType: false,
+                        // end 3. 
+
+                        success: function(result) {
+                            console.log(result);
+                        }
+                    });
+                    return false;
+                } else {
+                    alert(`[ERROR] ${err}`);
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
