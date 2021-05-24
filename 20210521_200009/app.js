@@ -67,7 +67,10 @@ app.get('/delete_cookie', (req, res) => {
 
 const multer = require('multer');
 
-/* 1. cấu hình nơi lưu trữ, tên file */
+/* 1a. cấu hình nơi lưu trữ, tên file */
+/* 1b. ảnh không được trùng */
+/* 1c. kiểm tra đuôi ảnh */
+/* 1d. dung lượng của ảnh */
 
 const storage = multer.diskStorage({
     // đường dẫn lưu file upload
@@ -76,15 +79,22 @@ const storage = multer.diskStorage({
     },
     // thông tin file
     filename: function (req, file, callback) {
-        callback(null, file.originalname); // lấy lại tên ảnh
+        if (file.mimetype == 'image/png') {
+            callback(null, `${Date.now()}_${file.originalname}`); // Date.now() + lấy lại tên ảnh
+        } else {
+            return callback('[ERROR] app.js: sai định dạng ảnh png');
+        }
     }
 });
+
+const limits = { fileSize: 1024*50 } // 50KB
+
 
 /* 2. cấu hình gọi sử dụng multer 
    file: name của input
    array('file'): upload nhiều files cùng lúc
 */
-const upload_file = multer({ storage }).single('file_upload'); 
+const upload_file = multer({ storage, limits }).single('file_upload'); 
 // file_upload: name field bên html form 
     // <form action="" method="POST" enctype="multipart/form-data" id="formUpload">
     // <label for="file">file</label>
@@ -95,10 +105,12 @@ const upload_file = multer({ storage }).single('file_upload');
 app.post('/upload_file', (req, res) => {
     // res.send('[DEBUG] debug');
     upload_file(req, res, (error) => {
-        if (error) throw error;
-
-        // console.log('[INFO] upload thành công');
-        res.send({ result: 1, message: '[INFO] upload thành công'});
+        if (error) {
+            res.send({ result: 0, message: `[ERROR] ${error}`});
+        } else {
+            // console.log('[INFO] upload thành công');
+            res.send({ result: 1, message: '[INFO] upload thành công' });
+        }
     });
 });
 
