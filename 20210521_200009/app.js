@@ -76,7 +76,7 @@ const storage = multer.diskStorage({
     },
     // thông tin file
     filename: function (req, file, callback) {
-        callback(null, 'ten_anh_vua_up.png');
+        callback(null, file.originalname); // lấy lại tên ảnh
     }
 });
 
