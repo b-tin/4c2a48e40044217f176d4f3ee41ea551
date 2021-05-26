@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- kết nối socket.io tới server -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>var socket = io();</script>
+  <!-- end -->
+
+</head>
+<body>
+  <div class="jumbotron text-center">
+    <h3>kết quả trả về: </h3>
+    <p id="ahihi" name="ahihi"></p>
+  </div>
+  
+  <div class="container text-center">
+    <label for="text" >nhập text</label>
+
+    <input type="text" id="text" name="text" placeholder="nhập text">
+    <button type="button" class="btn btn-success" onclick="send()">gửi</button>
+  </div>
+  
+
+  <script>
+    function send() {
+      var text = $('#text').val();
+      // alert(text);
+
+      // gửi giá trị qua cho server
+      socket.emit('client_foo', text);
+    }
+
+    socket.on('server_bar', (data) => {
+      $('#ahihi').html(data);
+    })
+  </script>
+</body>
+</html>
+
+
