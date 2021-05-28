@@ -64,11 +64,11 @@
                   <h3>DANH SÁCH ONLINE</h3>
                   <ul>
                       <li>
-                          <label for="user">abc</label>
-                          <input type="radio" id="user" name="user" value="1">
+                          <label for="user1">foo</label>
+                          <input type="radio" id="user1" name="user" value="1">
                       </li>
                       <li>
-                          <label for="user2">abc</label>
+                          <label for="user2">bar</label>
                           <input type="radio" id="user2" name="user" value="2">
                       </li>
                   </ul>
@@ -94,12 +94,12 @@
     function send()
     {
         var user = $('input[name=user]:checked').val();
-        // alert(user);
+        alert(user);
 
         var text = $('#text').val();
 
         // gửi giá trị qua server
-        socket.emit('client_foo', text);
+        socket.emit('client_foo', {user, text});
 
         // xoá khung nhập chat sau khi gửi cho server 
         $('#text').val('');
@@ -109,6 +109,20 @@
     socket.on('server_bar', (data) => {
       $('.frame ul').append('<li><span class="name">' + data.name + ':</span> <span class="text">' + data.text + '</span></li>');
     })
+
+    // nhận giá trị list_client_online từ server
+    socket.on('list_client_online', (data) => {
+      var list_client = [];
+      data.forEach(element => {
+        // alert(element);
+        list_client += `<li>
+                          <label for="user_` + element + `">` + element + `</label>
+                          <input type="radio" id="user_` + element + `" name="user" value="` + element + `">
+                        </li>`;
+      });
+      $('.list-online ul').html(list_client);
+    })
+
   </script>
 
 
