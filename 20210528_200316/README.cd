@@ -1,0 +1,6 @@
+# tiếp tục `socket.io`
+
+```sh
+cd ../20210526_195902
+node server.js
+```

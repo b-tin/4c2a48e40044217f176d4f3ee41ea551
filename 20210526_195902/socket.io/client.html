@@ -5,31 +5,154 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <!-- kết nối socket.io tới server -->
   <script src="/socket.io/socket.io.js"></script>
   <script>var socket = io();</script>
   <!-- end -->
 
+  <style>
+    .frame{
+        border: 1px solid #ced4da;
+        height: 400px;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        padding: 20px 10px;
+    }
+    .frame ul{
+        margin-bottom: 0;
+    }
+    .title{
+        margin-bottom: 2rem;
+        background-color: #e9ecef;
+        padding: 10px;
+    }
+    .list-online{
+        height: 443px;
+        border: 1px solid #ced4da;
+        border-radius: 3px;
+        padding: 20px;
+    }
+    .list-online h3{
+        border-bottom: 1px solid #ced4da;
+        padding-bottom: 10px;
+        text-align: center;
+        color: #6f6f6f;
+        font-size: 20px;
+    }
+    .list-online ul{
+        margin-bottom: 0;
+    }
+    /* .list-online ul li input{
+        display: none;
+    } */
+</style>
 </head>
 <body>
+  <div class="text-center title">
+    <h1>CHAT ONLINE</h1>
+  </div>
+
+  <div class="container">
+      <div class="row">
+          <div class="col-md-4">
+              <div class="list-online">
+                  <h3>DANH SÁCH ONLINE</h3>
+                  <ul>
+                      <li>
+                          <label for="user">abc</label>
+                          <input type="radio" id="user" name="user" value="1">
+                      </li>
+                      <li>
+                          <label for="user2">abc</label>
+                          <input type="radio" id="user2" name="user" value="2">
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-md-8">
+              <div class="frame">
+                  <ul>
+                    <!-- nội dung chat từ các user khác nhau -->
+                  </ul>
+              </div>
+              <div class="input-group mb-3">
+                  <input type="text" id="text" class="form-control" placeholder="Nhập Nội Dung">
+                  <div class="input-group-append">
+                    <button class="btn btn-success" type="button" onclick="send()">Go</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+    function send()
+    {
+        var user = $('input[name=user]:checked').val();
+        // alert(user);
+
+        var text = $('#text').val();
+
+        // gửi giá trị qua server
+        socket.emit('client_foo', text);
+
+        // xoá khung nhập chat sau khi gửi cho server 
+        $('#text').val('');
+    }
+
+    // nhận giá trị từ server
+    socket.on('server_bar', (data) => {
+      $('.frame ul').append('<li><span class="name">' + data.name + ':</span> <span class="text">' + data.text + '</span></li>');
+    })
+  </script>
+
+
+
+
+
+
+
+
+
+<!--   
   <div class="jumbotron text-center">
-    <h3>kết quả trả về: </h3>
+    <h3>kết quả CHAT trả về: </h3>
     <p id="ahihi" name="ahihi"></p>
   </div>
   
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h3>danh sách online</h3>
+      </div>
+      <div class="col-md-8">
+        <div class="frame">
+
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Search">
+          <div class="input-group-append">
+            <button class="btn btn-success" type="submit">Go</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container text-center">
     <label for="text" >nhập text</label>
 
     <input type="text" id="text" name="text" placeholder="nhập text">
     <button type="button" class="btn btn-success" onclick="send()">gửi</button>
-  </div>
+  </div> -->
   
 
-  <script>
+  <!-- <script>
     function send() {
       var text = $('#text').val();
       // alert(text);
@@ -41,7 +164,7 @@
     socket.on('server_bar', (data) => {
       $('#ahihi').html(data);
     })
-  </script>
+  </script> -->
 </body>
 </html>
 

@@ -47,9 +47,11 @@ io.on('connection', (socket) => {
 
   // nhận giá tri từ client.html
   socket.on('client_foo', (data) => {
-    
+    // lây tên người gửi
+    obj_data = { name: socket.id, text: data};
+
     // gửi với phương thức tuỳ ý
-    io.sockets.emit('server_bar', data);
+    io.sockets.emit('server_bar', obj_data);
   })
 
   // kiểm tra thoát kết nối
