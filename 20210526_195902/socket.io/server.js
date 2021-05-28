@@ -41,25 +41,40 @@ const io = require('socket.io')(server);
 // cú pháp: io.to(id).emit('key', value)
 
 // ------------------ thực hành ------------------
+
+var arrOnline = [];
+
 // kiểm tra kết nối
 io.on('connection', (socket) => {
   console.log(`[INFO] ${socket.id} đang online`);
 
   // nhận giá tri từ client.html
   socket.on('client_foo', (data) => {
-    
+    // lây tên người gửi
+    obj_data = { name: socket.id, text: data.text };
+
     // gửi với phương thức tuỳ ý
-    io.sockets.emit('server_bar', data);
+    // io.sockets.emit('server_bar', obj_data);
+
+    // gửi cho người bạn muốn
+    console.log(`---- ${data.user}`);
+    io.to(data.user).emit('server_bar', obj_data);
   })
+
+  // thêm client online vào arr
+  // kiểm tra nếu client id đã có trong arr thì không thêm
+  if (arrOnline.indexOf(socket.id) == -1) {
+    arrOnline.push(socket.id);
+  }
+
+  // xuất ra danh sách client online
+  io.sockets.emit('list_client_online', arrOnline);
 
   // kiểm tra thoát kết nối
   socket.on('disconnect', () => {
     console.log(`[INFO] ${socket.id} đã thoát`);
   });
 });
-
-
-
 
 
 /* 3. tạo server */
