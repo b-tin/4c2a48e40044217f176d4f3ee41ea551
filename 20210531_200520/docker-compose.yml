@@ -1,0 +1,15 @@
+# https://linuxhint.com/docker_compose_mongodb/
+
+version: '3'
+services:
+  test-mongodb-d30ce605815354c4deefbe7ff3c512d7:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - db-data-d30ce605815354c4deefbe7ff3c512d7:/data/db
+      - mongo-config-d30ce605815354c4deefbe7ff3c512d7:/data/configdb
+
+volumes:
+  db-data-d30ce605815354c4deefbe7ff3c512d7:
+  mongo-config-d30ce605815354c4deefbe7ff3c512d7:

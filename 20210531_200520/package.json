@@ -1,0 +1,14 @@
+{
+  "name": "20210531_200520",
+  "version": "1.0.0",
+  "description": "```sh npm install mongoose ```",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.12.12"
+  }
+}
