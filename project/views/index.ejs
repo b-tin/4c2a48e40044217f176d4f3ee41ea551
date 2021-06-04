@@ -1,31 +1,31 @@
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <!-- gọi đên meta -->
+    <%- include('home/meta'); %>
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- gọi đên css -->
+    <%- include('home/css'); %>
+  </head>
 
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <!-- gọi đên sidebar -->
+        <%- include('home/sidebar'); %>
 
-<div class="jumbotron text-center">
-    <!-- <h1><%- main %> - My First Bootstrap Page</h1> -->
-    <h1><span class="text-danger"><%- include(main) %></span> - My First Bootstrap Page</h1>
-    <p>Resize this responsive page to see the effect!</p>
-</div>
+        <!-- gọi đên top_nav -->
+        <%- include('home/top_nav'); %>
+    
+        <!-- gọi đên main -->
+        <%- include(main); %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <h3>Column 1</h3>
-            <p>Lorem ipsum dolor..</p>
-        </div>
-        <div class="col-sm-4">
-            <h3>Column 2</h3>
-            <p>Lorem ipsum dolor..</p>
-        </div>
-        <div class="col-sm-4">
-            <h3>Column 3</h3>
-            <p>Lorem ipsum dolor..</p>
-        </div>
+        <!-- gọi đên footer -->
+        <%- include('home/footer'); %>
+      </div>
     </div>
-</div>
+
+    <!-- gọi đên js -->
+    <%- include('home/js'); %>
+  </body>
+</html>

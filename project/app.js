@@ -12,11 +12,15 @@ app.set('view engine', 'ejs');
 // 3. <%- include('path') %>        : gọi đến file
 // 4. <% if, for, forEach, ... %>
 
+/**
+ * đường dẫn tĩnh
+ */
+app.use(express.static('public'));
 
 /**
  * gọi db
  */
-require('./db');
+require('./core/db');
 
 
 /**
