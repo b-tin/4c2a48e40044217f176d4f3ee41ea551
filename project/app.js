@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 /**
  * gọi db
  */
-require('./db');
+require('./core/db');
 
 
 /**
